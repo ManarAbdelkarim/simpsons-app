@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../../css/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <%- include('../layout/header.ejs')  %> 
+
+    <main>
+        
+    
+<section class="details">
+
+    <% array.forEach(el=> { %>
+  
+         <h1><%= el.character %></h1>
+         <p><%= el.quote %></p>
+
+<img src="<%= el.image %>" alt="">
+<form action="/favorite-quotes/<%= el.id %>?_method=DELETE" method= "post">
+  <button type="submit"> Delete</button>
+</form>
+
+<button type="button" id="update">update</button>
+  <form id="update-form"  method ="post" action ="/favorite-quotes/<%= el.id %>?_method=PUT">
+    <input type="text" name="character" value="<%= el.character %>">
+<input type="text" name="quote" value="<%= el.quote %>">
+<input type="text" name="image" value="<%= el.image %>">
+    <button  type="submit"> submit</button>
+    </form>
+
+    <% }) %>
+
+</section>
+
+    </main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('#update-form').hide();
+  $("#update").click(function(){
+    $("#update-form").toggle();
+  });
+});
+</script>
+    </body>
+</html>

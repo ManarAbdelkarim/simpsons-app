@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+    <%- include('../layout/header.ejs')  %> 
+    <main>
+        
+    
+<section class="grid">
+
+    <% array.forEach(el=> { %>
+     <section>
+         <h1><%= el.character %></h1>
+         <p><%= el.quote %></p>
+<img src="<%= el.image %>" alt="">
+
+<form action="/favorite-quotes" method="post">
+<input type="hidden" name="character" value="<%= el.character %>">
+<input type="hidden" name="quote" value="<%= el.quote %>">
+<input type="hidden" name="image" value="<%= el.image %>">
+<button type="submit"> add to favorite</button>
+</form>
+     </section>
+    <% }) %>
+
+</section>
+
+    </main>
+
+    </body>
+</html>
