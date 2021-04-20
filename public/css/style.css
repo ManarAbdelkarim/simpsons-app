@@ -3,6 +3,10 @@
     grid-template-columns: repeat(4,1fr);
 }
 
+.button{
+    background-color: Transparent  !important;
+}
+
 p , a{
     color: #fefb1e;
     font-family: sans-serif;
@@ -13,6 +17,7 @@ p , a{
     margin: 10%;
     border: 1px solid black;
     background-color: #16a085;
+    text-align-last: center;
 }
 
 .grid-fav{
@@ -57,5 +62,5 @@ main{
     width: fit-content;
     padding: 10%;
     background-color: #16a085;
-    
+
 }

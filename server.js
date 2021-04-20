@@ -1,6 +1,4 @@
-/* eslint-disable max-len */
-/* eslint-disable indent */
-/* eslint-disable require-jsdoc */
+
 'use strict';
 // Application Dependencies
 const express = require('express');
@@ -35,9 +33,6 @@ const client = new pg.Client(process.env.DATABASE_URL);
 // -- WRITE YOUR ROUTES HERE --
 function homePage(req, res) {
   const url = 'thesimpsonsquoteapi.glitch.me/quotes?count=10';
-  //   superagent.get(url).then(data=>{
-  //       res.render('pages/index', {array: data.body});
-  //   }).catch(err => console.log(err.message));
   superagent.get(url).set('User-Agent', '1.0').then((data) =>{
     const array = data.body.map((el)=>{
       return new Simpson(el);
@@ -51,14 +46,14 @@ const value = [quote, character, image];
 const insertInto = 'insert into characters(quote , character ,image) values($1,$2,$3);';
 client.query(insertInto, value).then(()=>{
     res.redirect('/favorite-quotes');
-});
+}).catch((err) => console.log(err.message));
 };
 
 const renderFavorite = (req, res) =>{
 const selectQuery = 'select * from characters ';
 client.query(selectQuery).then((data)=>{
     res.render('pages/favorite-list', {array: data.rows});
-});
+}).catch((err) => console.log(err.message));
 };
 
 const renderDetails = (req, res) => {
@@ -67,7 +62,7 @@ const renderDetails = (req, res) => {
     const values = [id];
     client.query(sql, values).then((data) =>{
 res.render('pages/details', {array: data.rows});
-    });
+    }).catch((err) => console.log(err.message));
 };
 
 const deleteCharacter = (req, res)=>{
@@ -76,7 +71,7 @@ const deleteCharacter = (req, res)=>{
     const sql = 'delete from characters where id =$1';
     client.query(sql, values).then(() =>{
         res.redirect('/favorite-quotes');
-});
+}).catch((err) => console.log(err.message));
 };
 
 const updateCharacter = (req, res) =>{
@@ -86,7 +81,7 @@ const updateCharacter = (req, res) =>{
     const sql = 'update characters set quote=$1 , character=$2 ,image=$3  where id =$4';
     client.query(sql, values).then(() =>{
 res.redirect(`/favorite-quotes/${id}`);
-});
+}).catch((err) => console.log(err.message));
 };
 
 app.get('/', homePage);
@@ -95,14 +90,7 @@ app.get('/favorite-quotes', renderFavorite);
 app.get('/favorite-quotes/:id', renderDetails);
 app.delete('/favorite-quotes/:id', deleteCharacter);
 app.put('/favorite-quotes/:id', updateCharacter);
-// callback functions
-// -- WRITE YOUR CALLBACK FUNCTIONS FOR THE ROUTES HERE --
 
-// helper functions
-
-const errorHandler = (err) =>{
-
-};
 
 function Simpson(data) {
   this.quote = data.quote,
